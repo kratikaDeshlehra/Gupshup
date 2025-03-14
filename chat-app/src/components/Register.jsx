@@ -1,6 +1,30 @@
 import React from 'react'
+import { useState } from 'react'
 import {FaUserPlus} from 'react-icons/fa'
 const Register = () => { 
+  const [userData,setUserData]=useState({fullName:"",email:"",password:""});
+
+  const handleChangeUserData=(e)=>{
+     const {name,value}=e.target;
+     setUserData((prevState)=>({
+             ...prevState,
+             [name]:value,
+             
+     })); 
+
+     console.log(userData);
+
+  } 
+
+  const handleAuth=async ()=>{
+    try{
+      alert('Registration successful');
+    } 
+    catch(error){
+      console.log(error);
+
+    }
+  }
   return (
       <section className='h-[100vh] flex flex-col justify-center items-center background-image'>
           <div className='bg-white shadow-lg p-5 rounded-xl h-[27rem] w-[20rem] flex flex-col justify-center items-center'>
@@ -9,13 +33,13 @@ const Register = () => {
                 <p className='text-center text-sm text-gray-400'>Welcome , create an account to continue</p>
             </div>
             <div className="w-full">
-              <input type='text' className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Full name'/>
-              <input type='email' className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Email'/>
-              <input type='password' className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Password'/>   
+              <input type='text' name='fullName'className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Full name' onChange={handleChangeUserData}/>
+              <input type='email' name='email'className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Email' onChange={handleChangeUserData}/>
+              <input type='password' name='password' className='border border-green-500 w-full p-2 rounded-md bg-[#01aa851d] text-[#004939f3] mb-3 font-medium outline-none placeholder:text-[#00493958]' placeholder='Password' onChange={handleChangeUserData}/>   
             </div> 
 
             <div className='w-full'>
-              <button className='bg-[#01aa85] text-white font-bold w-full p-2 rounded-md flex items-center gap-2 justify-center '>Register
+              <button onClick={handleAuth}className='bg-[#01aa85] text-white font-bold w-full p-2 rounded-md flex items-center gap-2 justify-center '>Register
                 <FaUserPlus/>
               </button>
             </div>
