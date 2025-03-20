@@ -71,8 +71,6 @@ const Chatlist = () => {
 
           </>
 
-
-
         ))}
 
       </main>
