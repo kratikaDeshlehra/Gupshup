@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import defaultAvatar from '../../public/assests/default.jpg'
+import defaultAvatar from '../assets/default.jpg'
 import { RiMore2Fill } from "react-icons/ri";
 import SearchModal from '../components/SearchModal.jsx'
 import chatData from '../data/chats.js'

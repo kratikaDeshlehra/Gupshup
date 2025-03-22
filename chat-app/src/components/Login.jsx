@@ -1,9 +1,13 @@
 import React from 'react'
 import {FaSignInAlt} from 'react-icons/fa'
 import { useState } from 'react';
-const Login = () => {
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../Firebase/firebase';
+const Login = ({isLogin,setIsLogin}) => {
 
    const [userData,setUserData]=useState({email:"",password:""});
+   const [isLoading,setIsLoading]=useState(false);
+
   
     const handleChangeUserData=(e)=>{
        const {name,value}=e.target;
@@ -16,13 +20,20 @@ const Login = () => {
        console.log(userData);
   
     } 
-  
+
     const handleAuth=async()=>{
+      setIsLoading(true);
+
      try{
-     alert('Login successful');
+         await signInWithEmailAndPassword(auth,userData.email,userData.password);
       } 
     catch(error){
       console.log(error);
+      alert(error);
+    } 
+
+    finally{
+      setIsLoading(false);
     }
     }
   return (
@@ -38,13 +49,21 @@ const Login = () => {
                   </div> 
       
                   <div className='w-full'>
-                    <button onClick={handleAuth}className='bg-[#01aa85] text-white font-bold w-full p-2 rounded-md flex items-center gap-2 justify-center ' >  Login In
-                      <FaSignInAlt/>
+                    <button disabled={isLoading} onClick={handleAuth}className='bg-[#01aa85] text-white font-bold w-full p-2 rounded-md flex items-center gap-2 justify-center ' >  
+                      {isLoading ? (
+                        <>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                        Login  <FaSignInAlt/>
+                        </>
+                      )}
                     </button>
                   </div>
                    
                    <div className='mt-5 text-center text-gray-400 text-sm'>
-                    <button>Don't have an account yet? Sign up</button>
+                    <button onClick={()=> setIsLogin(!isLogin)}>Don't have an account yet? Sign up</button>
                    </div>
                 </div>
             </section>

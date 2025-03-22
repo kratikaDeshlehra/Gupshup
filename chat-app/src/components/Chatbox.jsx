@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useState, useMemo } from 'react'
-import defaultAvatar from '../../public/assests/default.jpg'
+import defaultAvatar from '../assets/default.jpg'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import messageData from '../data/messageData'
 import { formatTimestamp } from '../utils/formatTimestamp'
