@@ -29,7 +29,7 @@ const Login = ({isLogin,setIsLogin}) => {
       } 
     catch(error){
       console.log(error);
-      alert(error);
+      alert(error.message);
     } 
 
     finally{
