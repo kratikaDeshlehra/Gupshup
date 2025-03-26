@@ -5,11 +5,15 @@ import SearchModal from '../components/SearchModal.jsx'
 import chatData from '../data/chats.js'
 import { useState, useEffect } from 'react';
 import {formatTimestamp} from '../utils/formatTimestamp.js'
+import { listenForChats } from '../Firebase/firebase.js';
 const Chatlist = () => {
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
-    setChats(chatData);
+      const unsubscribe=listenForChats(setChats);
+      return ()=> {
+        unsubscribe(); // clean up 
+      }
   }, []);
 
   const sortedChats=useMemo(()=>{
