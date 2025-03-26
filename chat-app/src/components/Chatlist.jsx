@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import defaultAvatar from '../assets/default.jpg'
 import { RiMore2Fill } from "react-icons/ri";
 import SearchModal from '../components/SearchModal.jsx'
-import chatData from '../data/chats.js'
 import { useState, useEffect } from 'react';
 import {formatTimestamp} from '../utils/formatTimestamp.js'
 import { listenForChats } from '../Firebase/firebase.js';
@@ -15,6 +14,10 @@ const Chatlist = () => {
         unsubscribe(); // clean up 
       }
   }, []);
+
+  const startChat=()=>{
+    alert('chat started')
+  }
 
   const sortedChats=useMemo(()=>{
       return [...chats].sort((a,b)=>{
@@ -45,7 +48,7 @@ const Chatlist = () => {
       <div className='w-[100%] mt-[10px] px-5'>
         <header className='flex items-center justify-between '>
           <h3 className='text-[16px]'>Messages ({chats?.length || 0})</h3>
-          <SearchModal />
+          <SearchModal  startChat={startChat}/>
         </header>
       </div>
 
