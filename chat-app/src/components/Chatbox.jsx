@@ -4,7 +4,7 @@ import defaultAvatar from '../assets/default.jpg'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import messageData from '../data/messageData'
 import { formatTimestamp } from '../utils/formatTimestamp'
-const Chatbox = () => {
+const Chatbox = ({selectedUser}) => {
   const [messages, setMessages] = useState([]);
   const [messageText,sendMessageText]=useState("");
   const senderEmail = 'baxo@mailinator.com';
@@ -52,11 +52,11 @@ const Chatbox = () => {
       <header className='border-b border-gray-400 w-[100%] h-[82px] m:h-fit p-4 bg-white' >
         <main className='flex items-center gap-3'>
           <span>
-            <img src={defaultAvatar} alt='' className='w-11 h-11 object-cover rounded-full' />
+            <img src={selectedUser?.image || defaultAvatar} alt='' className='w-11 h-11 object-cover rounded-full' />
           </span>
           <span>
-            <h3 className='font-semibold text-[#2A3D39] text-lg'>Gupshup User</h3>
-            <p className='font-light text-[#2A3D39] text-sm'>@gupshup</p>
+            <h3 className='font-semibold text-[#2A3D39] text-lg'>{selectedUser?.fullName || "Gupshup User"}</h3>
+            <p className='font-light text-[#2A3D39] text-sm'>{selectedUser?.username || "Gupshup"}</p>
           </span>
         </main>
       </header>

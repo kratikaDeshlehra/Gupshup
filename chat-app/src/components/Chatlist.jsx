@@ -5,7 +5,7 @@ import SearchModal from '../components/SearchModal.jsx'
 import { useState, useEffect } from 'react';
 import {formatTimestamp} from '../utils/formatTimestamp.js'
 import { listenForChats } from '../Firebase/firebase.js';
-const Chatlist = () => {
+const Chatlist = ({setSelectedUser}) => {
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -15,8 +15,8 @@ const Chatlist = () => {
       }
   }, []);
 
-  const startChat=()=>{
-    alert('chat started')
+  const startChat=(user)=>{
+    setSelectedUser(user);
   }
 
   const sortedChats=useMemo(()=>{
