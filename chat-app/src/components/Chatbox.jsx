@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useState, useMemo } from 'react'
 import defaultAvatar from '../assets/default.jpg'
 import { RiSendPlaneFill } from 'react-icons/ri'
-import messageData from '../data/messageData'
-import { auth, sendMessage } from '../Firebase/firebase'
+import { auth, listenForMessages, sendMessage } from '../Firebase/firebase'
 import { formatTimestamp } from '../utils/formatTimestamp'
 import logo from '../assets/logo.png'
 const Chatbox = ({ selectedUser }) => {
@@ -22,8 +21,8 @@ const Chatbox = ({ selectedUser }) => {
 
 
   useEffect(() => {
-    setMessages(messageData);
-  }, []);
+      listenForMessages(chatID,setMessages);   
+  }, [chatID]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -33,8 +32,8 @@ const Chatbox = ({ selectedUser }) => {
 
   const sortedMessages = useMemo(() => {
     return [...messages].sort((a, b) => {
-      const aTimestamp = a.timestamp.seconds + a.timestamp.nanoseconds / 1e9;
-      const bTimestamp = b.timestamp.seconds + b.timestamp.nanoseconds / 1e9;
+      const aTimestamp = a?.timestamp?.seconds + a?.timestamp?.nanoseconds / 1e9;
+      const bTimestamp = b?.timestamp?.seconds + b?.timestamp?.nanoseconds / 1e9;
 
       return aTimestamp - bTimestamp;
     })

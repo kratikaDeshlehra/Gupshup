@@ -71,7 +71,19 @@ export const sendMessage = async (messageText, chatID, user1, user2) => {
         timestamp: serverTimestamp(),
     });
 
-} 
+}  
+
+export const listenForMessages=(chatId,setMessages)=>{
+    const chatRef=collection(db,'chats',chatId,'messages');
+
+    onSnapshot(chatRef,(snapshot)=>{
+       const messages=snapshot.docs.map((doc)=> doc.data());
+       setMessages(messages);
+
+    });
+};
+
+
 
 
 
