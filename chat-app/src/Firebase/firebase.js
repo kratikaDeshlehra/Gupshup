@@ -48,7 +48,7 @@ export const sendMessage = async (messageText, chatID, user1, user2) => {
     const user2Data = user2Doc.data();
 
     const chatDoc = await getDoc(chatRef);
-    if (!chatDoc.exists) {
+    if (!chatDoc.exists()) {
         console.log('chats collection created ');
         await setDoc(chatRef, {
             
@@ -71,6 +71,8 @@ export const sendMessage = async (messageText, chatID, user1, user2) => {
         timestamp: serverTimestamp(),
     });
 
-}
+} 
+
+
 
 export { auth, db };

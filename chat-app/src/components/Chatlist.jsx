@@ -70,7 +70,7 @@ const Chatlist = ({setSelectedUser}) => {
               {chat.users?.filter((user) => user?.email !== 'baxo@mailinator.com')?.map(
                 (user) => (
                   <>
-                    <div className='flex items-start gap-3 '>
+                    <div className='flex items-start gap-3 ' onClick={()=> startChat(user)}>
                       <img src={user.image || defaultAvatar} className='h-[40px] w-[40px]  rounded-full object-cover' alt='' />
                       <span>
                         <h2 className='p-0 font-semibold text-[#2A3d39] text-left text-[17px]'>{user.fullName || 'Gupshup User'}</h2>
