@@ -4,9 +4,20 @@ import { RiMore2Fill } from "react-icons/ri";
 import SearchModal from '../components/SearchModal.jsx'
 import { useState, useEffect } from 'react';
 import {formatTimestamp} from '../utils/formatTimestamp.js'
-import { listenForChats } from '../Firebase/firebase.js';
+import { auth, db, listenForChats } from '../Firebase/firebase.js';
+import { doc, onSnapshot } from 'firebase/firestore';
 const Chatlist = ({setSelectedUser}) => {
   const [chats, setChats] = useState([]);
+  const [user,setUser]=useState(null);
+
+  useEffect(()=>{
+           const userDocRef=doc(db,'users',auth.currentUser.uid);
+           const unsubscribe=onSnapshot(userDocRef,(doc)=>{
+            setUser(doc.data());
+           });
+           return unsubscribe;
+          
+  },[])
 
   useEffect(() => {
       const unsubscribe=listenForChats(setChats);
@@ -34,8 +45,8 @@ const Chatlist = ({setSelectedUser}) => {
         <main className='flex items-center gap-3'>
           <img src={defaultAvatar} className='w-[44px] h-[44px] object-cover rounded-full' alt='' />
           <span>
-            <h3 className='p-0 font-semibold text=[#2A3D39] md:text-[17px]'>{'GupShup User'}</h3>
-            <p className='p-0 font-light text-[#2A3D39] text-[15px]'>{'@gupshup'}</p>
+            <h3 className='p-0 font-semibold text=[#2A3D39] md:text-[17px]'>{user?.fullName || 'Gupshup User'}</h3>
+            <p className='p-0 font-light text-[#2A3D39] text-[15px]'>@{user?.username || "Gupshup"}</p>
           </span>
         </main>
 
@@ -60,7 +71,7 @@ const Chatlist = ({setSelectedUser}) => {
                 (user) => (
                   <>
                     <div className='flex items-start gap-3 '>
-                      <img src={user.image} className='h-[40px] w-[40px]  rounded-full object-cover' alt='' />
+                      <img src={user.image || defaultAvatar} className='h-[40px] w-[40px]  rounded-full object-cover' alt='' />
                       <span>
                         <h2 className='p-0 font-semibold text-[#2A3d39] text-left text-[17px]'>{user.fullName || 'Gupshup User'}</h2>
                         <p className='p-0 font-light text-[#2A3d39] text-left text-[14px]'>{chat.lastMessage}</p>
