@@ -5,10 +5,14 @@ import { RiSendPlaneFill } from 'react-icons/ri'
 import { auth, listenForMessages, sendMessage } from '../Firebase/firebase'
 import { formatTimestamp } from '../utils/formatTimestamp'
 import logo from '../assets/logo.png'
+import { CiFaceSmile } from "react-icons/ci";
+import EmojiPicker from "emoji-picker-react";
+
+
 const Chatbox = ({ selectedUser }) => {
   const [messages, setMessages] = useState([]);
   const [messageText, sendMessageText] = useState("");
-
+  const [showPicker, setShowPicker] = useState(false);
 
   const scrollRef = useRef(null);
 
@@ -21,7 +25,7 @@ const Chatbox = ({ selectedUser }) => {
 
 
   useEffect(() => {
-      listenForMessages(chatID,setMessages);   
+    listenForMessages(chatID, setMessages);
   }, [chatID]);
 
   useEffect(() => {
@@ -32,8 +36,8 @@ const Chatbox = ({ selectedUser }) => {
 
   const sortedMessages = useMemo(() => {
     return [...messages].sort((a, b) => {
-      const aTimestamp = a?.timestamp?.seconds + a?.timestamp?.nanoseconds / 1e9;
-      const bTimestamp = b?.timestamp?.seconds + b?.timestamp?.nanoseconds / 1e9;
+      const aTimestamp = (a?.timestamp?.seconds || 0) + (a?.timestamp?.nanoseconds || 0) / 1e9;
+      const bTimestamp = (b?.timestamp?.seconds || 0) + (b?.timestamp?.nanoseconds || 0) / 1e9;
 
       return aTimestamp - bTimestamp;
     })
@@ -42,6 +46,10 @@ const Chatbox = ({ selectedUser }) => {
   const handleSendMessage = (e) => {
     e.preventDefault();
     console.log("handleSendMessage is being called!");
+    if(!messageText){
+      alert('You cannot send empty text !');
+      return;
+    }
     const newMessage = {
       sender: senderEmail,
       text: messageText,
@@ -107,9 +115,24 @@ const Chatbox = ({ selectedUser }) => {
               </div>
             </section>
 
+            {showPicker && (
+
+              <div className='absolute bottom-10 left-4 '>
+                <EmojiPicker onEmojiClick={(e)=> sendMessageText((prev)=> prev+e.emoji)}/>
+              </div>
+
+
+            )}
+
             <div className='sticky lg:bottom-0 bottom-[60px] p-3 h-fit w-[100%]'>
               <form onSubmit={handleSendMessage} className='flex items-center bg-white h-[45px] w-[100%] px-2 rounded-lg relative shadow-lg' >
+
                 <input value={messageText} onChange={(e) => sendMessageText(e.target.value)} className='h-full text-[#2A3D39] outline-none text-[16px] pl-3 pr-[50px] rounded-lg w-[100%]' type='text' placeholder='Write your message...' />
+
+                <button type='button' className='flex items-center justify-center rounded-full bg-[#D9f2ed] hover:bg-[#c8eae3] w-8 h-8 mr-12' onClick={(e) => { e.stopPropagation(); setShowPicker(!showPicker) }}>
+                  <CiFaceSmile color='#01AA85' onClick={() => setShowPicker(!showPicker)} />
+                </button>
+
                 <button type='submit' className='flex items-center justify-center absolute right-3 p-2 rounded-full bg-[#D9f2ed] hover:bg-[#c8eae3]'>
                   <RiSendPlaneFill color='#01AA85' />
                 </button>
@@ -120,13 +143,13 @@ const Chatbox = ({ selectedUser }) => {
 
         </section>
       ) : <section className='h-screen w-[100%] bg-[#e5f6f3]'>
-           <div className='flex flex-col justify-center items-center h-[100vh] '>
-              <img src={logo} alt='' width={100}/>
-              <h1 className='text-[30px] font-bold text-teal-700 mt-5'>Welcome to Gupshup -Your place to talk!</h1>
-              <p className='text-gray-500'> Be it tea or chat, conversations are a must!</p>
-           </div>
+        <div className='flex flex-col justify-center items-center h-[100vh] '>
+          <img src={logo} alt='' width={100} />
+          <h1 className='text-[30px] font-bold text-teal-700 mt-5'>Welcome to Gupshup -Your place to talk!</h1>
+          <p className='text-gray-500'> Be it tea or chat, conversations are a must!</p>
+        </div>
 
-        </section>}
+      </section>}
     </>
 
   )
