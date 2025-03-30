@@ -31,7 +31,7 @@ const App = () => {
       {user ? (<div className='flex lg:flex-row flex-col items-start w-[100%]'>
         <NavLinks />
         <Chatlist setSelectedUser={setSelectedUser}/>
-        <Chatbox selectedUser={selectedUser}/>
+        <Chatbox selectedUser={selectedUser} setSelectedUser={setSelectedUser}/>
       </div>) : (<div>
         {isLogin ? isReset ? (<ResetPassword setIsLogin={setIsLogin} setIsReset={setIsReset}/>)
         :(<Login isLogin={isLogin} isReset={isReset} setIsReset={setIsReset} setIsLogin={setIsLogin} />) : (<Register setIsLogin={setIsLogin}  />)}

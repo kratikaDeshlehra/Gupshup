@@ -69,13 +69,13 @@ const Chatlist = ({ setSelectedUser }) => {
       </div>
 
       <main className='flex flex-col items-start mt-[1.5rem] pb-3'>
-        {sortedChats?.map((chat) => (
+        {sortedChats?.map((chat,chatIndex) => (
           <>
-            <button key={chat?.uid} className='flex items-start justify-between w-[100%] border-b border-[#9090902c] px-5 pb-3 pt-3'>
+            <button key={chat?.uid || `chat-${chatIndex}`} className='flex items-start justify-between w-[100%] border-b border-[#9090902c] px-5 pb-3 pt-3'>
               {chat.users?.filter((user) => user?.email !== auth.currentUser.email)?.map(
-                (user) => (
+                (user,userIndex) => (
                   <>
-                    <div className='flex items-start gap-3 ' onClick={() => startChat(user)}>
+                    <div key={user?.uid || `user-${chatIndex}-${userIndex}`}className='flex items-start gap-3 ' onClick={() => startChat(user)}>
                       <img src={user.image || defaultAvatar} className='h-[40px] w-[40px]  rounded-full object-cover' alt='' />
                       <span>
                         <h2 className='p-0 font-semibold text-[#2A3d39] text-left text-[17px]'>{user.fullName || 'Gupshup User'}</h2>

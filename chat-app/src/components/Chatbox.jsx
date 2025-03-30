@@ -8,16 +8,17 @@ import logo from '../assets/logo.png'
 import { CiFaceSmile } from "react-icons/ci";
 import EmojiPicker from "emoji-picker-react";
 import { PiNoteDuotone } from "react-icons/pi";
-import  SummaryModal  from '../components/SummaryModal'
-import fetchMessage from '../components/fetchMessage' 
-import {summarization} from '../components/summarization'
+import SummaryModal from '../components/SummaryModal'
+import fetchMessage from '../components/fetchMessage'
+import { summarization } from '../components/summarization'
+import { FaXmark } from "react-icons/fa6";
 
-const Chatbox = ({ selectedUser }) => {
+const Chatbox = ({ selectedUser,setSelectedUser }) => {
   const [messages, setMessages] = useState([]);
   const [messageText, sendMessageText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const [summary, setSummary] = useState("");
-  const [showSummaryModal,setShowSummaryModal]=useState(false);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
 
   const scrollRef = useRef(null);
 
@@ -51,15 +52,15 @@ const Chatbox = ({ selectedUser }) => {
 
   const handleSummary = async () => {
     setShowSummaryModal(true);
-    const messages = await fetchMessage(chatID); 
+    const messages = await fetchMessage(chatID);
     const summaryText = await summarization(messages);
     setSummary(summaryText);
-  };  
+  };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     console.log("handleSendMessage is being called!");
-    if(!messageText){
+    if (!messageText) {
       alert('You cannot send empty text !');
       return;
     }
@@ -84,7 +85,7 @@ const Chatbox = ({ selectedUser }) => {
   return (
     <>
 
-      {showSummaryModal && <SummaryModal summary={summary} setSummary={setSummary}setShowSummaryModal={setShowSummaryModal} showSummaryModal={showSummaryModal}/>}
+      {showSummaryModal && <SummaryModal summary={summary} setSummary={setSummary} setShowSummaryModal={setShowSummaryModal} showSummaryModal={showSummaryModal} />}
       {selectedUser ? (
         <section className='flex flex-col items-start justify-start h-screen w-[100%] background-image'>
           <header className='border-b border-gray-400 w-[100%] h-[82px] m:h-fit p-4 bg-white' >
@@ -96,13 +97,17 @@ const Chatbox = ({ selectedUser }) => {
                 <h3 className='font-semibold text-[#2A3D39] text-lg'>{selectedUser?.fullName || "Gupshup User"}</h3>
                 <p className='font-light text-[#2A3D39] text-sm'>{selectedUser?.username || "Gupshup"}</p>
               </span>
+              
+                <button onClick={()=> setSelectedUser(null)}className='text-black bg-transparent hover:bg-[#d9f2ed] hover:text-[#01AA85] rounded-lg text-sm w-8 h-8 top-2 right-2 absolute justify-center items-center inline-flex'><FaXmark size={20} /></button>
+              
+
             </main>
           </header>
 
           <main className='custom-scrollbar relative h-[100vh] w-[100%] flex flex-col jusify-between'>
             <section className='px-3 pt-5 b-20 lg:pb-10'>
               <div ref={scrollRef} className='overflow-auto h-[80vh]'>
-                {sortedMessages?.map((msg, index) => (
+                {sortedMessages?.map((msg) => (
                   <>
                     {msg?.sender === senderEmail ? <div className='flex flex-col items-end w-full'>
                       <span className='flex gap-3 h-auto me-10'>
@@ -133,7 +138,7 @@ const Chatbox = ({ selectedUser }) => {
             {showPicker && (
 
               <div className='absolute bottom-10 left-4 '>
-                <EmojiPicker onEmojiClick={(e)=> sendMessageText((prev)=> prev+e.emoji)}/>
+                <EmojiPicker onEmojiClick={(e) => sendMessageText((prev) => prev + e.emoji)} />
               </div>
 
 
@@ -143,7 +148,7 @@ const Chatbox = ({ selectedUser }) => {
               <form onSubmit={handleSendMessage} className='flex items-center bg-white h-[45px] w-[100%] px-2 rounded-lg relative shadow-lg' >
 
                 <input value={messageText} onChange={(e) => sendMessageText(e.target.value)} className='h-full text-[#2A3D39] outline-none text-[16px] pl-3 pr-[50px] rounded-lg w-[100%]' type='text' placeholder='Write your message...' />
-                
+
 
                 <button type='button' className='flex items-center justify-center rounded-full bg-[#D9f2ed] hover:bg-[#c8eae3] w-10 h-8 mr-3' >
                   <PiNoteDuotone color='#01AA85' onClick={handleSummary} />
