@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../Firebase/firebase'
 import { setDoc, doc } from 'firebase/firestore'
 
-const Register = ({ isLogin, setIsLogin }) => {
+const Register = ({ setIsLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({ fullName: "", email: "", password: "" });
 
@@ -78,7 +78,7 @@ const Register = ({ isLogin, setIsLogin }) => {
         </div>
 
         <div className='mt-5 text-center text-gray-400 text-sm'>
-          <button onClick={() => setIsLogin(!isLogin)}>Already have an account? Sign In</button>
+          <button onClick={() => setIsLogin(true)}>Already have an account? Sign In</button>
         </div>
       </div>
     </section>

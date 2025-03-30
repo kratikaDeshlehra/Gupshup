@@ -5,11 +5,13 @@ import Chatlist from './components/Chatlist'
 import Login from './components/Login'
 import Register from './components/Register'
 import { auth } from './Firebase/firebase'
+import ResetPassword from './components/ResetPassword'
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
   const [selectedUser,setSelectedUser]=useState(null);
+  const [isReset, setIsReset] = useState(false);
 
 
   useEffect(() => {
@@ -31,7 +33,8 @@ const App = () => {
         <Chatlist setSelectedUser={setSelectedUser}/>
         <Chatbox selectedUser={selectedUser}/>
       </div>) : (<div>
-        {isLogin ? (<Login isLogin={isLogin} setIsLogin={setIsLogin} />) : (<Register isLogin={isLogin} setIsLogin={setIsLogin}  />)}
+        {isLogin ? isReset ? (<ResetPassword setIsLogin={setIsLogin} setIsReset={setIsReset}/>)
+        :(<Login isLogin={isLogin} isReset={isReset} setIsReset={setIsReset} setIsLogin={setIsLogin} />) : (<Register setIsLogin={setIsLogin}  />)}
 
       </div>)}
     </div>

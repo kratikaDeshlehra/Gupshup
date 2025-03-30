@@ -3,7 +3,7 @@ import {FaSignInAlt} from 'react-icons/fa'
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebase';
-const Login = ({isLogin,setIsLogin}) => {
+const Login = ({isLogin,setIsLogin,isReset,setIsReset}) => {
 
    const [userData,setUserData]=useState({email:"",password:""});
    const [isLoading,setIsLoading]=useState(false);
@@ -64,6 +64,9 @@ const Login = ({isLogin,setIsLogin}) => {
                    
                    <div className='mt-5 text-center text-gray-400 text-sm'>
                     <button onClick={()=> setIsLogin(!isLogin)}>Don't have an account yet? Sign up</button>
+                   </div> 
+                   <div className='mt-5 text-center text-gray-400 text-sm'>
+                    <button onClick={()=> setIsReset(!isReset)}>Forgot password ?</button>
                    </div>
                 </div>
             </section>
