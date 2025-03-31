@@ -12,6 +12,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [selectedUser,setSelectedUser]=useState(null);
   const [isReset, setIsReset] = useState(false);
+  
 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <div>
       {user ? (<div className='flex lg:flex-row flex-col items-start w-[100%]'>
-        <NavLinks />
+        <NavLinks/>
         <Chatlist setSelectedUser={setSelectedUser}/>
         <Chatbox selectedUser={selectedUser} setSelectedUser={setSelectedUser}/>
       </div>) : (<div>

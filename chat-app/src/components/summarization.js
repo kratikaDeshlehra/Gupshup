@@ -6,7 +6,7 @@ export const summarization = async (chatHistory) => {
   try {
     const formattedChat = chatHistory.map(msg => `${msg.sender}: ${msg.text}`).join("\n");
     if(!formattedChat) return 'No chat found. Please start the conversation to get summary.'
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
     console.log(chatHistory)
     const prompt = `Summarize this chat conversation completely also include the name of people who are talking: ${formattedChat}`;
 

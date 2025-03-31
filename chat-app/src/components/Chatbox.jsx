@@ -12,15 +12,49 @@ import SummaryModal from '../components/SummaryModal'
 import fetchMessage from '../components/fetchMessage'
 import { summarization } from '../components/summarization'
 import { FaXmark } from "react-icons/fa6";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import MessageSuggesstions from './MessageSuggesstions'
 
-const Chatbox = ({ selectedUser,setSelectedUser }) => {
+const Chatbox = ({ selectedUser, setSelectedUser }) => {
   const [messages, setMessages] = useState([]);
   const [messageText, sendMessageText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const [summary, setSummary] = useState("");
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-
   const scrollRef = useRef(null);
+  const [aiResponses, setAIResponses] = useState([]);
+  const [selectedMessageIndex, setSelectedMessageIndex] = useState(null);
+  const [loading,setLoading]=useState(false);
+
+
+
+
+  const handleMessageClick = async (messageText, index) => {
+    try {
+      setSelectedMessageIndex(index);
+      setLoading(true);
+  
+      const genAI = new GoogleGenerativeAI("AIzaSyDoJRHxY5fzQyNWanYe2XlEeZsYbnaxkRA");
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+      const prompt = `Give 3 short, smart replies to: "${messageText}". If it's only emojis, reply with fitting emojis or short text. No numbering, only messages`;
+      const response = await model.generateContent(prompt);
+
+  
+      const suggestions = response.response.text()
+        .split("\n")
+        .map(reply => reply.length > 2 && reply[1] === '.' ? reply.slice(2).trim() : reply)
+        .filter(Boolean);
+
+      setAIResponses(suggestions);
+      setLoading(false);
+
+    } catch (error) {
+      console.log(error);
+     
+      return ["Sorry, I’m taking too long!", "Try again", "Loading..."];
+    }
+  }
+
 
   const chatID = auth?.currentUser.uid < selectedUser?.uid ? `${auth?.currentUser?.uid}-${selectedUser?.uid}` : `${selectedUser?.uid}-${auth?.currentUser.uid}`
 
@@ -83,6 +117,7 @@ const Chatbox = ({ selectedUser,setSelectedUser }) => {
 
   }
   return (
+
     <>
 
       {showSummaryModal && <SummaryModal summary={summary} setSummary={setSummary} setShowSummaryModal={setShowSummaryModal} showSummaryModal={showSummaryModal} />}
@@ -97,9 +132,9 @@ const Chatbox = ({ selectedUser,setSelectedUser }) => {
                 <h3 className='font-semibold text-[#2A3D39] text-lg'>{selectedUser?.fullName || "Gupshup User"}</h3>
                 <p className='font-light text-[#2A3D39] text-sm'>{selectedUser?.username || "Gupshup"}</p>
               </span>
-              
-                <button onClick={()=> setSelectedUser(null)}className='text-black bg-transparent hover:bg-[#d9f2ed] hover:text-[#01AA85] rounded-lg text-sm w-8 h-8 top-2 right-2 absolute justify-center items-center inline-flex'><FaXmark size={20} /></button>
-              
+
+              <button onClick={() => setSelectedUser(null)} className='text-black bg-transparent hover:bg-[#d9f2ed] hover:text-[#01AA85] rounded-lg text-sm w-8 h-8 top-2 right-2 absolute justify-center items-center inline-flex'><FaXmark size={20} /></button>
+
 
             </main>
           </header>
@@ -107,7 +142,7 @@ const Chatbox = ({ selectedUser,setSelectedUser }) => {
           <main className='custom-scrollbar relative h-[100vh] w-[100%] flex flex-col jusify-between'>
             <section className='px-3 pt-5 b-20 lg:pb-10'>
               <div ref={scrollRef} className='overflow-auto h-[80vh]'>
-                {sortedMessages?.map((msg) => (
+                {sortedMessages?.map((msg, index) => (
                   <>
                     {msg?.sender === senderEmail ? <div className='flex flex-col items-end w-full'>
                       <span className='flex gap-3 h-auto me-10'>
@@ -122,9 +157,15 @@ const Chatbox = ({ selectedUser,setSelectedUser }) => {
                       <span className='flex gap-3 w-[40%] h-auto ms-10'>
                         <img src={defaultAvatar} alt='' className='h-11 w-11 object-cover rounded-full' />
                         <div>
-                          <div className='flex items-center bg-white justify-center p-4 rounded-lg shadow-sm'>
+                          <div onClick={() => handleMessageClick(msg.text, index)} className='flex items-center bg-white justify-center p-4 rounded-lg shadow-sm'>
                             <h4>{msg.text}</h4>
                           </div>
+                          {(selectedMessageIndex === index) && (
+
+                            <MessageSuggesstions setLoading={setLoading} loading={loading} setSelectedMessageIndex={setSelectedMessageIndex} aiResponses={aiResponses} setAIResponses={setAIResponses} data={{ chatID: chatID, user1: user1, user2: user2 }} />
+
+                          )}
+
                           <p className='text-gray-400 text-sx mt-3 '>{formatTimestamp(msg?.timestamp)}</p>
                         </div>
                       </span>
