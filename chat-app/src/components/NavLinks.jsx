@@ -4,7 +4,7 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../Firebase/firebase';
 import { RiArrowDownSFill, RiBardLine, RiChatAiLine, RiFile4Line, RiFolderUserLine, RiNotificationLine, RiShutDownLine } from "react-icons/ri";
 import Chatlist from './Chatlist';
-const NavLinks = () => {
+const NavLinks = ({setShowChatlist,setSelectedUser}) => {
 
  
 
@@ -27,8 +27,12 @@ const NavLinks = () => {
         <ul className='flex lg:flex-col flex-row items-center gap-7 md:gap-10 px-2 md:px-0'>
 
 
-          <li className='block lg:hidden'>
-            <button className='text-[22px] md:text-[28px] cursor-pointer' onClick={()=><Chatlist/>}>
+          <li className=''>
+            <button className='text-[22px] md:text-[28px] cursor-pointer' onClick={()=> 
+              {
+              setShowChatlist((prev)=> !prev);
+              setSelectedUser(null);
+              }}>
               <RiFolderUserLine color='#fff' />
             </button>
           </li>
