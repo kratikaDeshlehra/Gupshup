@@ -14,6 +14,7 @@ import { summarization } from '../components/summarization'
 import { FaXmark } from "react-icons/fa6";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import MessageSuggesstions from './MessageSuggesstions'
+import {model} from '../components/model'
 
 const Chatbox = ({ selectedUser, setSelectedUser }) => {
   const [messages, setMessages] = useState([]);
@@ -34,8 +35,6 @@ const Chatbox = ({ selectedUser, setSelectedUser }) => {
       setSelectedMessageIndex(index);
       setLoading(true);
   
-      const genAI = new GoogleGenerativeAI("AIzaSyDoJRHxY5fzQyNWanYe2XlEeZsYbnaxkRA");
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
       const prompt = `Give 3 short, smart replies to: "${messageText}". If it's only emojis, reply with fitting emojis or short text. No numbering, only messages`;
       const response = await model.generateContent(prompt);
 
@@ -139,8 +138,8 @@ const Chatbox = ({ selectedUser, setSelectedUser }) => {
             </main>
           </header>
 
-          <main className='custom-scrollbar relative h-[100vh] w-[100%] flex flex-col jusify-between'>
-            <section className='px-3 pt-5 b-20 lg:pb-10'>
+          <main className='custom-scrollbar relative h-[100vh] w-[100%] flex flex-col jusify-between '>
+            <section className='px-3 pt-5 b-20 lg:pb-10 '>
               <div ref={scrollRef} className='overflow-auto h-[80vh]'>
                 {sortedMessages?.map((msg, index) => (
                   <>
@@ -186,7 +185,7 @@ const Chatbox = ({ selectedUser, setSelectedUser }) => {
             )}
 
             <div className='sticky lg:bottom-0 bottom-[60px] p-3 h-fit w-[100%]'>
-              <form onSubmit={handleSendMessage} className='flex items-center bg-white h-[45px] w-[100%] px-2 rounded-lg relative shadow-lg' >
+              <form onSubmit={handleSendMessage} className='flex items-center bg-white h-[45px] w-[100%] px-2 rounded-lg relative shadow-lg md:relative' >
 
                 <input value={messageText} onChange={(e) => sendMessageText(e.target.value)} className='h-full text-[#2A3D39] outline-none text-[16px] pl-3 pr-[50px] rounded-lg w-[100%]' type='text' placeholder='Write your message...' />
 

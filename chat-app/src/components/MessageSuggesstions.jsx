@@ -21,7 +21,7 @@ const MessageSuggesstions = ({ setSelectedMessageIndex, aiResponses ,setAIRespon
           <FaXmark size={20} /></button>
      <div className='p-2.5'>
      {loading ? (
-          <p className="text-white text-center">Loading...</p> 
+          <p className="text-white text-center">Generating responses ...</p> 
         ) : (
           aiResponses.map((reply, idx) => (
             <button
