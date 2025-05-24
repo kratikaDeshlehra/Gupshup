@@ -10,7 +10,9 @@ const NavLinks = ({setShowChatlist,setSelectedUser}) => {
 
   const handleLogout = async () => {
     try {
+      setSelectedUser(null);
       await signOut(auth);
+
 
     } catch (error) {
       console.log(error);

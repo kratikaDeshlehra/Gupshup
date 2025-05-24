@@ -5,19 +5,39 @@ import SearchModal from '../components/SearchModal.jsx'
 import { useState, useEffect } from 'react';
 import { formatTimestamp } from '../utils/formatTimestamp.js'
 import { auth, db, listenForChats } from '../Firebase/firebase.js';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, onSnapshot} from 'firebase/firestore';
 const Chatlist = ({ setSelectedUser }) => {
   const [chats, setChats] = useState([]);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const userDocRef = doc(db, 'users', auth.currentUser.uid);
-    const unsubscribe = onSnapshot(userDocRef, (doc) => {
-      setUser(doc.data());
-    });
-    return unsubscribe;
 
-  }, [])
+  useEffect(() => {
+  const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userDocRef = doc(db, 'users', user.uid);
+      const unsubscribeUser = onSnapshot(userDocRef, (docSnap) => {
+        setUser(docSnap.data());
+      });
+
+      // Clean up Firestore listener
+      return () => unsubscribeUser();
+    }
+  });
+
+  // Clean up Auth listener
+  return () => unsubscribeAuth();
+}, []);
+
+  // useEffect(() => {
+  //    if (!auth.currentUser) return;
+  //   const userDocRef = doc(db, 'users', auth.currentUser.uid);
+  //   const unsubscribe = onSnapshot(userDocRef, (doc) => {
+  //     setUser(doc.data());
+  //   });
+  //   return unsubscribe;
+
+  // }, [])
 
   useEffect(() => {
     const unsubscribe = listenForChats(setChats);

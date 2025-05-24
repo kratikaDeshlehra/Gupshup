@@ -6,12 +6,13 @@ import defaultAvatar from '../assets/default.jpg'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { auth, db } from '../Firebase/firebase'
 
-const SearchModal = ({startChat}) => {
+const SearchModal = ({ startChat }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
-  setUsers([]);}
+    setUsers([]);
+  }
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -27,8 +28,9 @@ const SearchModal = ({startChat}) => {
 
       const foundUsers = [];
       querySnapshot.forEach((doc) => {
-        if(doc.id!==auth.currentUser.uid){
-        foundUsers.push(doc.data());}
+        if (doc.id !== auth.currentUser.uid) {
+          foundUsers.push(doc.data());
+        }
       });
 
       setUsers(foundUsers);
@@ -71,11 +73,11 @@ const SearchModal = ({startChat}) => {
               <div className='m-2 ' >
 
                 {users.map((user) => (
-                  <div  onClick={()=>{
-                      
-                      startChat(user);
-                      closeModal();
-                                        }} className='flex items-start gap-3 bg-[#15eabc34] p-1.5 mb-3 rounded-lg cursor-pointer border border-[#ffffff20] shadow-lg '>
+                  <div onClick={() => {
+
+                    startChat(user);
+                    closeModal();
+                  }} className='flex items-start gap-3 bg-[#15eabc34] p-1.5 mb-3 rounded-lg cursor-pointer border border-[#ffffff20] shadow-lg '>
                     <img src={user.image || defaultAvatar} alt='' className='h-[40px] w-[40px] rounded-full' />
                     <span >
                       <h2 className='p-0 font-semibold text-white text-[18px]'>{user.fullName}</h2>
