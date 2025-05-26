@@ -100,7 +100,7 @@ export const sendMessage = async (messageText, chatID, user1, user2) => {
 
     await addDoc(messageRef, {
         text: messageText,
-        sender: auth.currentUser.uid,
+        sender: auth.currentUser.email,
         timestamp: serverTimestamp(),
     });
 
@@ -110,12 +110,21 @@ export const sendMessage = async (messageText, chatID, user1, user2) => {
 export const listenForMessages = (chatId, setMessages) => {
     const chatRef = collection(db, 'chats', chatId, 'messages');
 
-    onSnapshot(chatRef, (snapshot) => {
+    // onSnapshot(chatRef, (snapshot) => {
+    //     const messages = snapshot.docs.map((doc) => doc.data());
+    //     setMessages(messages);
+
+    // });
+    const unsubscribe = onSnapshot(chatRef, (snapshot) => {
         const messages = snapshot.docs.map((doc) => doc.data());
         setMessages(messages);
-
+         console.log(messages);
     });
+   
+
+    return unsubscribe;
 };
+
 
 
 

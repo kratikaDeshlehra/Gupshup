@@ -74,7 +74,7 @@ const SearchModal = ({ startChat }) => {
 
                 {users.map((user) => (
                   <div onClick={() => {
-
+                    startChat(null);
                     startChat(user);
                     closeModal();
                   }} className='flex items-start gap-3 bg-[#15eabc34] p-1.5 mb-3 rounded-lg cursor-pointer border border-[#ffffff20] shadow-lg '>

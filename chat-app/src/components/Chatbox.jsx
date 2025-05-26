@@ -60,8 +60,13 @@ const Chatbox = ({ selectedUser, setSelectedUser }) => {
   }
 
 
-  const chatID = auth?.currentUser.uid < selectedUser?.uid ? `${auth?.currentUser?.uid}-${selectedUser?.uid}` : `${selectedUser?.uid}-${auth?.currentUser.uid}`
-
+  //const chatID = auth?.currentUser.uid < selectedUser?.uid ? `${auth?.currentUser?.uid}-${selectedUser?.uid}` : `${selectedUser?.uid}-${auth?.currentUser.uid}`
+  
+  const chatID = selectedUser
+  ? auth?.currentUser?.uid < selectedUser.uid
+    ? `${auth?.currentUser?.uid}-${selectedUser.uid}`
+    : `${selectedUser.uid}-${auth?.currentUser?.uid}`
+  : null;
   const user1 = auth?.currentUser;
   const user2 = selectedUser;
   const senderEmail = auth?.currentUser?.email;
@@ -69,7 +74,14 @@ const Chatbox = ({ selectedUser, setSelectedUser }) => {
 
 
   useEffect(() => {
-    listenForMessages(chatID, setMessages);
+
+    if (!chatID) return;
+    
+    setMessages([]);
+    const unsubscribe = listenForMessages(chatID, setMessages);
+
+    return () => unsubscribe(); 
+    //listenForMessages(chatID, setMessages);
   }, [chatID]);
 
   useEffect(() => {
