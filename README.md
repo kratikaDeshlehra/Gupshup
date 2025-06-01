@@ -23,3 +23,24 @@ Gemini API	- AI based summaries and suggestions
 
 🔧 Installation & Setup
 1. Clone the repository
+   git clone https://github.com/kratikaDeshlehra/Gupshup.git
+   cd chat-app
+
+2. Install dependencies
+   npm install
+
+3.Configure Firebase
+
+  * Create a Firebase project at Firebase Console
+
+  * Enable Authentication and Firestore
+
+  * Replace Firebase config in src/firebase.js or use environment variables
+
+4. Configure Gemini API 
+
+  * Get your API key from Gemini API 
+  *Add to your model.js file.
+
+5. Start the development server
+  npm run dev
