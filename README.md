@@ -1,46 +1,59 @@
-# Gupshup
+<h1>💬 Gupshup</h1>
 
-Gupshup is a Real-Time Chat App built with React.js and Firebase, enhanced with AI-powered chat summaries and smart replies. Designed with a responsive UI for seamless experiences across all devices.
+<p><strong>Gupshup</strong> is a Real-Time Chat App built with <strong>React.js</strong> and <strong>Firebase</strong>, enhanced with <strong>AI-powered chat summaries</strong> and <strong>smart replies</strong>. Designed with a <strong>responsive UI</strong> for seamless experiences across all devices.</p>
 
-🚀 Features
+<hr>
 
-🔥 Real-time Messaging with Firebase Firestore
+<h2>🚀 Features</h2>
+<ul>
+  <li>🔥 <strong>Real-time Messaging</strong> with Firebase Firestore</li>
+  <li>🤖 <strong>AI-Generated Replies</strong> using Gemini API</li>
+  <li>🧠 <strong>AI Chat Summaries</strong> for quick thread review</li>
+  <li>📱 <strong>Responsive Design</strong></li>
+  <li>🔐 <strong>Firebase Authentication</strong> (email/password login)</li>
+</ul>
 
-🤖 AI-Generated Replies using Gemini API 
+<hr>
 
-🧠 AI Chat Summaries for quick thread review
+<h2>🛠️ Tech Stack</h2>
+<ul>
+  <li><strong>React.js</strong> – Frontend framework</li>
+  <li><strong>Firebase</strong> – Authentication and storage</li>
+  <li><strong>Tailwind CSS</strong> – Responsive styling framework</li>
+  <li><strong>Gemini API</strong> – AI-based summaries and suggestions</li>
+</ul>
 
-📱 Responsive Design 
+<hr>
 
-🔐 Firebase Authentication (email/password login)
+<h2>🔧 Installation & Setup</h2>
 
-🛠️ Tech Stack
-
-React.js	- Frontend framework
-Firebase	- Authentication and storage 
-Tailwind CSS	-Responsive styling framework
-Gemini API	- AI based summaries and suggestions
-
-🔧 Installation & Setup
-1. Clone the repository
-   git clone https://github.com/kratikaDeshlehra/Gupshup.git
-   cd chat-app
-
-2. Install dependencies
-   npm install
-
-3.Configure Firebase
-
-  * Create a Firebase project at Firebase Console
-
-  * Enable Authentication and Firestore
-
-  * Replace Firebase config in src/firebase.js or use environment variables
-
-4. Configure Gemini API 
-
-  * Get your API key from Gemini API 
-  *Add to your model.js file.
-
-5. Start the development server
-  npm run dev
+<ol>
+  <li>
+    <strong>Clone the repository</strong><br>
+    <code>git clone https://github.com/kratikaDeshlehra/Gupshup.git</code><br>
+    <code>cd chat-app</code>
+  </li>
+  <li>
+    <strong>Install dependencies</strong><br>
+    <code>npm install</code>
+  </li>
+  <li>
+    <strong>Configure Firebase</strong>
+    <ul>
+      <li>Create a Firebase project at <a href="https://console.firebase.google.com/">Firebase Console</a></li>
+      <li>Enable <strong>Authentication</strong> and <strong>Firestore</strong></li>
+      <li>Replace Firebase config in <code>src/firebase.js</code> or use environment variables</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Configure Gemini API</strong>
+    <ul>
+      <li>Get your API key from <a href="https://makersuite.google.com/app">Gemini API</a></li>
+      <li>Add the key to your <code>model.js</code> file</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Start the development server</strong><br>
+    <code>npm run dev</code>
+  </li>
+</ol>
