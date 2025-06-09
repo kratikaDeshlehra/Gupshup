@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/eb27fc0f-58dd-4304-9ef9-2712fdb24e27)![image](https://github.com/user-attachments/assets/0329c3b1-0094-49b6-adee-8be4ecf8d34a)<h1>💬 Gupshup</h1>
+<h1>💬 Gupshup</h1>
 
 <p><strong>Gupshup</strong> is a Real-Time Chat App built with <strong>React.js</strong> and <strong>Firebase</strong>, enhanced with <strong>AI-powered chat summaries</strong> and <strong>smart replies</strong>. Designed with a <strong>responsive UI</strong> for seamless experiences across all devices.</p>
 
